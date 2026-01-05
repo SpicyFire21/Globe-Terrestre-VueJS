@@ -16,6 +16,13 @@ let pointColor = '#2C2F33';
 let oceanColor = '#007BFF';
 let contriesColorHover = '#6A5ACD';
 
+// les points a ajouter sur le globe, certains paramètres sont a ajouter pour modifier l'apparence
+let points = [
+  { lat: 48.8566, lng: 2.3522, size: 0.25, color: pointColor },
+  { lat: 40.7128, lng: -74.0060, size: 0.25, color: pointColor },
+  { lat: 35.6895, lng: 139.6917, size: 0.25, color: pointColor }
+]
+
 
 
 onMounted(async () => {
@@ -62,15 +69,21 @@ onMounted(async () => {
       .polygonStrokeColor(() => borderColor)
 
       // Pings
-      .pointsData([
-        { lat: 48.8566, lng: 2.3522, size: 0.25, color: pointColor }
-      ])
-      .pointColor(d => d.color)
-      .pointRadius(d => d.size)
+      .pointsData(points)                                   // les points posés sur le globe
+      .pointColor(d => d.color)                 // permet de modifier les couleurs de tous les points
+      .pointRadius(d => d.size)                // permet de modifier les couleurs de tous les points
+      .pointAltitude(d => d.altitude || 0.03) // contrôle la hauteur du point
   scene.add(globe)
+  let t = 0
 
+  function animatePoints() {
+    t += 0.2
+    globe.pointRadius(d => d.size + Math.sin(t) * 0.1)
+  }
   function animate() {
     requestAnimationFrame(animate)
+    animatePoints()       // OBLIGATOIRE
+
     renderer.render(scene, camera)
     controls.update()
   }
