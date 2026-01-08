@@ -1,9 +1,9 @@
 <template>
-  <GlobeMap />
+  <GlobeMap/>
 </template>
 
 <script setup>
-import GlobeMap from './components/GlobeMap.vue'
+import GlobeMap from './components/GlobeMapGlobegl.vue'
 
 </script>
 
